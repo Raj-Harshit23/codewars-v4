@@ -431,7 +431,7 @@ def ActPirate(pirate):
     N=pirate.getCurrentFrame()
     pirate.setTeamSignal(checkWalls(pirate,pirate.getTeamSignal()))
 
-    if(N<350):
+    if(N<550):
         if checkIsland(pirate):
             island=closestIsland(pirate.getPosition(),pirate.getTeamSignal())
             island_index=int((island-3)/2)

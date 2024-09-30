@@ -1,6 +1,6 @@
 import random
 import math
-name = "CodeInfinity"
+name = "latest"
 
 
 def moveTo(x, y, Pirate):
@@ -26,7 +26,7 @@ def moveTo(x, y, Pirate):
 
 
 def moveAway(x, y, Pirate):
-    #print(2)
+    print(2)
     position = Pirate.getPosition()
     if position[0] == x and position[1] == y:
         return random.randint(1, 4)
@@ -36,7 +36,7 @@ def moveAway(x, y, Pirate):
         return (position[1] > y) * 2 + 1
 
 def circleAround(x, y, radius, Pirate, initial="abc", clockwise=True):
-    position = Pirate.getPosition();#print(1)
+    position = Pirate.getPosition();print(1)
     rx = position[0]
     ry = position[1]
     pos = [[x + i, y + radius] for i in range(-1 * radius, radius + 1)]
@@ -53,10 +53,10 @@ def circleAround(x, y, radius, Pirate, initial="abc", clockwise=True):
             
             return moveAway(x, y, Pirate)
         else:
-            #print(7)
+            print(7)
             return moveTo(x, y, Pirate)
     else:
-        #print(2)
+        print(2)
         index = pos.index([rx, ry])
         
         return moveTo(
@@ -161,8 +161,7 @@ def spread(pirate):
     
     if t<200 :
         if boundx<=50 and boundy<=50 :
-            if  t<150 and abs(X)<boundx*0.4 and abs(Y)<boundy*0.4 :
-                #print(t)
+            if  t<150 and abs(X)<boundx*0.75 and abs(Y)<boundy*0.75 :
                 return moveTo(boundx-dpx,boundy-dpy,pirate)
             else:
                 if j == boundx-1 :  # If at rightmost edge and moving right
@@ -186,33 +185,127 @@ def spread(pirate):
                     return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
                 else :
                     return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+
+
+                # myline=j+k
+                # if j>k:
+                #     if(dir[0]>0) :
+                #         return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+                #     else :
+                #         if((myline)<boundx) :
+                #             return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+                #         else :
+                #             return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+
+                # if j<k :
+                #     if(dir[1]>0) :
+                #         return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+                #     else :
+                #         if((myline)<boundx) :
+                #             return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+                #         else:
+                #             return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+                # if j==k :
+                #     if random.randint(1,2)==1 :
+                #         if(dir[0]>0) :
+                #             return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+                #         else :
+                #             if((myline)<boundx) :
+                #                 return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+                #             else :
+                #                 return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+                #     else:
+                #         if(dir[1]>0) :
+                #             return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+                #         else :
+                #             if((myline)<boundx) :
+                #                 return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+                #             else:
+                #                 return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+        else :
+            if j == boundx-1 :  # If at rightmost edge and moving right
+                sigList[0] = "-1"  # Change direction to move left
+            elif j == 0 :  # If at leftmost edge and moving left
+                sigList[0] = "1"  # Change direction to move right
+            if k == boundy-1 :  # If at rightmost edge and moving right
+                sigList[1] = "-1"  # Change direction to move left
+            elif k == 0 :  # If at leftmost edge and moving left
+                sigList[1] = "1"  # Change direction to move right
+            dir=[int(sigList[0]),int(sigList[1])]
+            psignal=""
+            for i in sigList:
+                psignal+=str(i)
+                if i != "t":
+                    psignal+=";"
+            pirate.setSignal(psignal)
+
+            if abs(X)>abs(Y):
+                return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            else :
+                return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+
+    else:
+        if  t<150 and abs(X)<boundx*0.65 and abs(Y)<boundy*0.65 :
+            return moveTo(boundx-dpx,boundy-dpy,pirate)
         else:
-            if  t<150 and abs(X)<boundx*0.65 and abs(Y)<boundy*0.65 :
-                #print(t)
-                return moveTo(boundx-dpx,boundy-dpy,pirate)
-            else:
-                if j == boundx-1 :  # If at rightmost edge and moving right
-                    sigList[0] = "-1"  # Change direction to move left
-                elif j == 0 :  # If at leftmost edge and moving left
-                    sigList[0] = "1"  # Change direction to move right
-                if k == boundy-1 :  # If at rightmost edge and moving right
-                    sigList[1] = "-1"  # Change direction to move left
-                elif k == 0 :  # If at leftmost edge and moving left
-                    sigList[1] = "1"  # Change direction to move right
-                dir=[int(sigList[0]),int(sigList[1])]
-                psignal=""
-                for i in sigList:
-                    psignal+=str(i)
-                    if i != "t":
-                        psignal+=";"
-                pirate.setSignal(psignal)
-                # print(pirate.getSignal())
+            if j == boundx-1 :  # If at rightmost edge and moving right
+                sigList[0] = "-1"  # Change direction to move left
+            elif j == 0 :  # If at leftmost edge and moving left
+                sigList[0] = "1"  # Change direction to move right
+            if k == boundy-1 :  # If at rightmost edge and moving right
+                sigList[1] = "-1"  # Change direction to move left
+            elif k == 0 :  # If at leftmost edge and moving left
+                sigList[1] = "1"  # Change direction to move right
+            dir=[int(sigList[0]),int(sigList[1])]
+            psignal=""
+            for i in sigList:
+                psignal+=str(i)
+                if i != "t":
+                    psignal+=";"
+            pirate.setSignal(psignal)
+            # print(pirate.getSignal())
 
-                if abs(X)>abs(Y):
-                    return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
-                else :
-                    return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+            if abs(X)>abs(Y):
+                return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            else :
+                return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
 
+
+            # myline=j+k
+            # if j>k:
+            #     if(dir[0]>0) :
+            #         return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            #     else :
+            #         if((myline)<boundx) :
+            #             return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            #         else :
+            #             return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+
+            # if j<k :
+            #     if(dir[1]>0) :
+            #         return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+            #     else :
+            #         if((myline)<boundx) :
+            #             return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+            #         else:
+            #             return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            # if j==k :
+            #     if random.randint(1,2)==1 :
+            #         if(dir[0]>0) :
+            #             return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            #         else :
+            #             if((myline)<boundx) :
+            #                 return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
+            #             else :
+            #                 return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+            #     else:
+            #         if(dir[1]>0) :
+            #             return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+            #         else :
+            #             if((myline)<boundx) :
+            #                 return moveTo(j+random.choice([1,-1]),k+dir[1],pirate)
+            #             else:
+            #                 return moveTo(j+dir[0],k+random.choice([1,-1]),pirate)
     else :
         if j == boundx-1 :  # If at rightmost edge and moving right
             sigList[0] = "-1"  # Change direction to move left
@@ -431,7 +524,7 @@ def ActPirate(pirate):
     N=pirate.getCurrentFrame()
     pirate.setTeamSignal(checkWalls(pirate,pirate.getTeamSignal()))
 
-    if(N<350):
+    if(N<300):
         if checkIsland(pirate):
             island=closestIsland(pirate.getPosition(),pirate.getTeamSignal())
             island_index=int((island-3)/2)
@@ -546,7 +639,7 @@ def ActTeam(team):
     team.buildWalls(2)
     team.buildWalls(3)
     t =  team.getTeamSignal()
-    #print(t)
+    print(t)
     list = t.split(";")
     list[9]=list[10]
     list[10]=""
@@ -560,5 +653,5 @@ def ActTeam(team):
     N=team.getCurrentFrame()
     if (N>1):
      pirate_count_update(team)
-    # print(team.getTeamSignal())
-    # print(team.getCurrentFrame())
+    print(team.getTeamSignal())
+    print(team.getCurrentFrame())
